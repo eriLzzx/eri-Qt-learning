@@ -38,7 +38,7 @@ void MainWindow::btnNumClicked()
 void MainWindow::on_btnPeriod_clicked()
 {
     QString str = ui->display->text();
-    if(!str.contains("."))//判断条件，若当前数字已有小数点，则不添加
+    if(!str.contains("."))//判断条件，若当前数字已有小数点，则不添加小数点
          str += qobject_cast<QPushButton*>(sender())->text();
     ui->display->setText(str);
 }

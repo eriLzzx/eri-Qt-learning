@@ -21,10 +21,14 @@ public:
     QString operand;
     QStack<QString>operands;
     QStack<QString>opcodes;
+    QString opcode;
+
+    QString calculation(bool *ok=NULL);
 
 private slots:
     void btnNumClicked();
     void btnBinaryOperatorClicked();
+    void btnUnaryOperatorClicked();
 
     void on_btnPeriod_clicked();
 

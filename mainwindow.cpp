@@ -1,23 +1,37 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <math.h>
+#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    digitNums = {{Qt::Key_0,ui->btnNum0},
+               {Qt::Key_1,ui->btnNum1},
+               {Qt::Key_2,ui->btnNum2},
+               {Qt::Key_3,ui->btnNum3},
+               {Qt::Key_4,ui->btnNum4},
+               {Qt::Key_5,ui->btnNum5},
+               {Qt::Key_6,ui->btnNum6},
+               {Qt::Key_7,ui->btnNum7},
+               {Qt::Key_8,ui->btnNum8},
+               {Qt::Key_9,ui->btnNum9},};
     // 数字键1-9的映射
-    connect(ui->btnNum0,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum1,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum2,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum3,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum4,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum5,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum6,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum7,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum8,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
-    connect(ui->btnNum9,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    foreach (auto btn,digitNums)
+        connect(btn,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum0,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum1,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum2,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum3,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum4,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum5,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum6,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum7,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum8,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
+    // connect(ui->btnNum9,SIGNAL(clicked()),this,SLOT(btnNumClicked()));
     //操作符映射
     connect(ui->btnMulti,SIGNAL(clicked()),this,SLOT(btnBinaryOperatorClicked()));
     connect(ui->btnPlus,SIGNAL(clicked()),this,SLOT(btnBinaryOperatorClicked()));
@@ -28,6 +42,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->btnInverse,SIGNAL(clicked()),this,SLOT(btnUnaryOperatorClicked()));
     connect(ui->btnSqrt,SIGNAL(clicked()),this,SLOT(btnUnaryOperatorClicked()));
     connect(ui->btnSquare,SIGNAL(clicked()),this,SLOT(btnUnaryOperatorClicked()));
+    connect(ui->btnSign,SIGNAL(clicked()),this,SLOT(btnUnaryOperatorClicked()));
+    connect(ui->btnClear,SIGNAL(clicked()),this,SLOT(btnUnaryOperatorClicked()));
 }
 
 MainWindow::~MainWindow()
@@ -38,33 +54,39 @@ MainWindow::~MainWindow()
 QString MainWindow::calculation(bool *ok)
 {
     double result = 0;
-    if(operands.size()==2 && opcodes.size()>0){
-        //取操作数
+
+    // 检查是否有足够的操作数和操作符
+    if (operands.size() >= 2 && opcodes.size() > 0) {
         double operand1 = operands.front().toDouble();
-        operands.pop_front();
+        operands.pop_front(); // 第一个操作数出栈
         double operand2 = operands.front().toDouble();
-        operands.pop_front();
+        operands.pop_front(); // 第二个操作数出栈
+        QString op = opcodes.back(); // 获取最后一个操作符
+        opcodes.pop_back(); // 移除最后一个操作符
 
-        //取操作符
-        QString op = opcodes.front();
-        opcodes.pop_front();
-
-        if(op == "+"){
+        // 根据操作符执行相应的计算
+        if (op == "+") {
             result = operand1 + operand2;
-        }else if(op == "-"){
-            result =operand1 - operand2;
-        }else if(op == "×"){
-            result =operand1 * operand2;
-        }else if(op == "÷"){
-            result =operand1 / operand2;
+        } else if (op == "-") {
+            result = operand1 - operand2;
+        } else if (op == "×") {
+            result = operand1 * operand2;
+        } else if (op == "÷") {
+            if (operand2 != 0) {
+                result = operand1 / operand2;
+            } else {
+                return QString("除数不能为0");
+            }
         }
+        // 将计算结果重新添加到操作数列表中
         operands.push_back(QString::number(result));
-        ui->statusbar->showMessage(QString ("the calculation is in progress is %1,opcode is %2").arg(operands.size()).arg
-                                   (opcodes.size()));
+        ui->statusbar->showMessage(QString("计算中：%1 操作符数：%2")
+                                       .arg(operands.size()).arg(opcodes.size()));
+    } else {
+        ui->statusbar->showMessage(QString("操作数数量：%1 操作符数量：%2")
+                                       .arg(operands.size()).arg(opcodes.size()));
     }
-    else
-        ui->statusbar->showMessage(QString ("the operands is %1,opcode is %2").arg(operands.size()).arg
-                                   (opcodes.size()));
+
     return QString::number(result);
 }
 
@@ -97,9 +119,17 @@ void MainWindow::btnUnaryOperatorClicked()
             result *=result;
         else if(op == "²√x")
             result = sqrt(result);
+        else if(op == "±"){
+            // 反转符号
+            result = -result;
+        }else if(op == "CE" || op =="C")
+            //清空
+            result = 0;
         ui->display->setText(QString::number(result));
     }
 }
+
+
 
 
 
@@ -126,19 +156,29 @@ void MainWindow::on_btnClear_clicked()
 
 void MainWindow::btnBinaryOperatorClicked()
 {
-    // ui->statusbar->showMessage("last operand" + operand);
     QString opcode = qobject_cast<QPushButton *>(sender())->text();
-    if(operand !="")
-    {
+
+    // 检查操作符并替换
+    if (!operand.isEmpty()) {
+        // 如果操作数已输入，添加当前操作数到操作数列表
         operands.push_back(operand);
-        //将前一个数保存到堆栈中，并清空原数
-        operand = "";
-        //将先前的操作符保存到堆栈中
-        opcodes.push_back(opcode);
+        operand.clear(); // 清空当前操作数
     }
-    QString result = calculation();
-    ui->display->setText(result);
+    // 如果存在操作符，替换最后的操作符
+    if (!opcodes.empty()) {
+        opcodes.back() = opcode; // 替换最后一个操作符
+    } else {
+        opcodes.push_back(opcode); // 如果没有操作符，则添加
+    }
+    // 只在有足够的操作数和操作符时进行计算
+    if (operands.size() >= 2 && opcodes.size() > 0) {
+        QString result = calculation();
+        ui->display->setText(result);
+    } else {
+        ui->statusbar->showMessage("输入不完整，请继续输入");
+    }
 }
+
 
 void MainWindow::on_btnEqual_clicked()
 {
@@ -150,5 +190,13 @@ void MainWindow::on_btnEqual_clicked()
     }
     QString result = calculation();
     ui->display->setText(result);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    foreach(auto btnKey , digitNums.keys()){
+        if(event->key() == btnKey)
+            digitNums[btnKey]->animateClick();
+    }
 }
 

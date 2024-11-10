@@ -33,6 +33,10 @@ MainWindow::MainWindow(QWidget *parent)
         ui->TextEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
         ui->actionLineWrap->setChecked(true);
     }
+    //
+    ui->actionShowStatusBar->setCheckable(true);
+    ui->actionToolBar->setChecked(true);
+
 
     statusLabel.setMaximumHeight(150);
     statusLabel.setText("length：" + QString::number(0) +"lines：" +QString::number(1));
@@ -298,6 +302,37 @@ void MainWindow::on_actionFont_triggered()
     QFont font = QFontDialog::getFont(&ok,this);
     if(ok){
         ui->TextEdit->setFont(font);
+    }
+}
+
+
+void MainWindow::on_actionToolBar_triggered()
+{
+    bool visible = ui->toolBar->isVisible();
+    ui->toolBar->setVisible(!visible);
+    ui->actionToolBar->setCheckable(!visible);
+}
+
+
+
+void MainWindow::on_actionShowStatusBar_triggered()
+{
+    bool visible = ui->statusbar->isVisible();
+    ui->statusbar->setVisible(!visible);
+    ui->actionShowStatusBar->setCheckable(!visible);
+}
+
+
+void MainWindow::on_actionSelectAll_triggered()
+{
+    ui->TextEdit->selectAll();
+}
+
+
+void MainWindow::on_actionExit_triggered()
+{
+    if(userEditConfirmed()){
+        exit(0);
     }
 }
 

@@ -51,6 +51,16 @@ private slots:
 
     void on_TextEdit_redoAvailable(bool b);
 
+    void on_actionFontColor_triggered();
+
+    void on_actionLineWrap_triggered();
+
+    void on_actionBackGroundColor_triggered();
+
+    void on_actionFontBackGroundColor_triggered();
+
+    void on_actionFont_triggered();
+
 private:
     Ui::MainWindow *ui;
 

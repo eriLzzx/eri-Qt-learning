@@ -17,5 +17,7 @@
         <file>img/statusbar.menu.png</file>
         <file>img/replace.png</file>
         <file>img/textEditor.png</file>
+        <file>img/lineNumber.png</file>
+        <file>img/fontColor.png</file>
     </qresource>
 </RCC>

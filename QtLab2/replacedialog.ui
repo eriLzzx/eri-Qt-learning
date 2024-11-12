@@ -47,7 +47,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="searchText_2"/>
+            <widget class="QLineEdit" name="targetText"/>
            </item>
           </layout>
          </item>
@@ -56,7 +56,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="cbCaseSensetive">
            <property name="text">
             <string>区分大小写</string>
            </property>
@@ -110,9 +110,16 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="btnReplace">
          <property name="text">
           <string>替换(&amp;R)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnReplaceAll">
+         <property name="text">
+          <string>全部替换(&amp;A)</string>
          </property>
         </widget>
        </item>
@@ -120,13 +127,6 @@
         <widget class="QPushButton" name="btnCancel">
          <property name="text">
           <string>取消</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_2">
-         <property name="text">
-          <string>全部替换(&amp;A)</string>
          </property>
         </widget>
        </item>

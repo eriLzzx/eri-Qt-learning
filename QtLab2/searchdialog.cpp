@@ -8,6 +8,7 @@ SearchDialog::SearchDialog(QWidget *parent,QPlainTextEdit * textEdit )
 {
     ui->setupUi(this);
     pTextEdit = textEdit;
+    ui->rbDown->setChecked(true);
 }
 
 SearchDialog::~SearchDialog()
@@ -18,6 +19,9 @@ SearchDialog::~SearchDialog()
 void SearchDialog::on_btnFindNext_clicked()
 {
     QString target = ui->searchText->text();
+    if(target =="" || pTextEdit == nullptr){
+        return;
+    }
     //将文本框所有的内容获取到text
     QString text = pTextEdit->toPlainText();
     QTextCursor c = pTextEdit->textCursor();//获取光标位置

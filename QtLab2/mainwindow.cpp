@@ -36,20 +36,18 @@ MainWindow::MainWindow(QWidget *parent)
     //
     ui->actionShowStatusBar->setCheckable(true);
     ui->actionToolBar->setChecked(true);
-
-
-    statusLabel.setMaximumHeight(150);
-    statusLabel.setText("length：" + QString::number(0) +"lines：" +QString::number(1));
+    //
+    statusLabel.setMaximumWidth(180);
+    statusLabel.setText("length：" + QString::number(0) +"     lines：" +QString::number(1));
     ui->statusbar->addPermanentWidget(&statusLabel);
 
-    statusCursorLabel.setMaximumHeight(150);
-    statusCursorLabel.setText("length：" + QString::number(0) +"lines：" +QString::number(1));
+    statusCursorLabel.setMaximumWidth(180);
+    statusCursorLabel.setText("Ln：" + QString::number(0) +"     Col：" +QString::number(1));
     ui->statusbar->addPermanentWidget(&statusCursorLabel);
     //此处必须使用new方法
     QLabel *author = new QLabel(ui->statusbar);
     author->setText(tr("梁梓轩"));
     ui->statusbar->addPermanentWidget(author);
-
 
 }
 
@@ -178,6 +176,9 @@ void MainWindow::on_TextEdit_textChanged()
         this->setWindowTitle("*" + this->windowTitle());
         textChanged = true ;
     }
+    statusLabel.setText("length:"+ QString::number(ui->TextEdit->toPlainText().length())
+                        +"      lines:"+
+                        QString::number(ui->TextEdit->document()->lineCount()));
 }
 
 bool MainWindow::userEditConfirmed(){
@@ -334,5 +335,25 @@ void MainWindow::on_actionExit_triggered()
     if(userEditConfirmed()){
         exit(0);
     }
+}
+
+
+void MainWindow::on_TextEdit_cursorPositionChanged()
+{
+    int col =0;
+    int ln = 0;
+    int flg= -1;
+    int pos = ui->TextEdit->textCursor().position();
+    QString text = ui->TextEdit->toPlainText();
+    for(int i = 0 ;i<pos;i++){
+        if(text[i]=='\n'){
+            ln ++;
+            flg = i;
+        }
+    }
+    flg++;
+    col = pos - flg;
+    statusCursorLabel.setText("Ln：" + QString::number(ln + 1)
+                              +"    Col：" +QString::number(col + 1));
 }
 

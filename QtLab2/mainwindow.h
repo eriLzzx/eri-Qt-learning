@@ -69,9 +69,11 @@ private slots:
 
     void on_actionExit_triggered();
 
+    void on_TextEdit_cursorPositionChanged();
+
 private:
     Ui::MainWindow *ui;
-
+    //必须在库文件里手动添加来实现
     QLabel statusCursorLabel;
     QLabel statusLabel;
 

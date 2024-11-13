@@ -115,6 +115,7 @@
    <addaction name="actionOpen"/>
    <addaction name="actionSave"/>
    <addaction name="actionSaveAs"/>
+   <addaction name="actionAutoSave"/>
    <addaction name="separator"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
@@ -406,6 +407,21 @@
   <action name="actionSelectAll">
    <property name="text">
     <string>全选(&amp;A)</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionAutoSave">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="res.qrc">
+     <normaloff>:/img/autosave.png</normaloff>:/img/autosave.png</iconset>
+   </property>
+   <property name="text">
+    <string>自动保存</string>
    </property>
    <property name="menuRole">
     <enum>QAction::MenuRole::NoRole</enum>

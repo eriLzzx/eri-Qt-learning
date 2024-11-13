@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QColorDialog>
 #include <QFontDialog>
+#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -48,7 +49,9 @@ MainWindow::MainWindow(QWidget *parent)
     QLabel *author = new QLabel(ui->statusbar);
     author->setText(tr("梁梓轩"));
     ui->statusbar->addPermanentWidget(author);
-
+    //当定时器超时（timeout）时，自动调用 MainWindow 类中的 autoSave 函数。
+    autoSaveTimer = new QTimer(this);
+    connect(autoSaveTimer, &QTimer::timeout, this, &MainWindow::autoSave);
 }
 
 MainWindow::~MainWindow()
@@ -355,5 +358,89 @@ void MainWindow::on_TextEdit_cursorPositionChanged()
     col = pos - flg;
     statusCursorLabel.setText("Ln：" + QString::number(ln + 1)
                               +"    Col：" +QString::number(col + 1));
+}
+
+void MainWindow::autoSave()
+{
+    if (filePath.isEmpty()) {
+        // 如果没有打开文件，提醒用户并弹出文件选择对话框
+        QMessageBox::warning(this, "自动保存", "当前没有打开文件，请先打开一个文件。");
+
+        // 弹出文件打开对话框
+        QString filename = QFileDialog::getOpenFileName(this, "打开文件", ".", tr("Text files (*.txt) ;; ALL(*.*)"));
+        if (filename.isEmpty()) {
+            return; // 用户取消选择文件，直接返回
+        }
+
+        // 设置文件路径并打开文件
+
+        QFile file(filename);
+        if (!file.open(QFile::ReadOnly | QFile::Text)) {
+            QMessageBox::warning(this, "文件打开失败", QString("无法打开文件: %1").arg(filePath));
+            return;
+        }
+        filePath = filename;
+        // 文件读取并填充到文本编辑器
+        QTextStream in(&file);
+        QString text = in.readAll();
+        ui->TextEdit->clear();
+        ui->TextEdit->insertPlainText(text);
+        file.close();
+    }
+
+    // 进行自动保存
+    QFile file(filePath);
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, "自动保存失败", "无法打开文件进行保存");
+        return;
+    }
+
+    QTextStream out(&file);
+    QString text = ui->TextEdit->toPlainText();
+    out << text;
+
+    file.close();
+}
+
+
+void MainWindow::on_actionAutoSave_triggered()
+{
+    if (filePath.isEmpty()) {
+        // 如果当前没有打开文件，提醒用户并请求打开文件
+        QMessageBox::warning(this, "自动保存", "当前没有打开文件，请先打开一个文件来启用自动保存。");
+
+        // 弹出文件打开对话框，用户选择文件
+        QString filename = QFileDialog::getOpenFileName(this, "打开文件", ".", tr("Text files (*.txt)"));
+        if (filename.isEmpty()) {
+            return; // 用户取消文件选择，退出
+        }
+
+        // 设置文件路径并打开文件
+        filePath = filename;
+        QFile file(filePath);
+        if (!file.open(QFile::ReadOnly | QFile::Text)) {
+            QMessageBox::warning(this, "文件打开失败", QString("无法打开文件: %1").arg(filePath));
+            return;
+        }
+
+        // 文件读取并填充到文本编辑器
+        QTextStream in(&file);
+        QString text = in.readAll();
+        ui->TextEdit->clear();
+        ui->TextEdit->insertPlainText(text);
+        file.close();
+    }
+
+    if (autoSaveEnabled) {
+        // 如果自动保存已启用，停止定时器
+        autoSaveTimer->stop();
+        autoSaveEnabled = false;
+        QMessageBox::information(this, "自动保存", "自动保存已停止");
+    } else {
+        // 启动定时器，定时保存
+        autoSaveTimer->start(autoSaveInterval);
+        autoSaveEnabled = true;
+        QMessageBox::information(this, "自动保存", "自动保存已启动");
+    }
 }
 

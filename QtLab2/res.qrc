@@ -19,5 +19,6 @@
         <file>img/textEditor.png</file>
         <file>img/lineNumber.png</file>
         <file>img/fontColor.png</file>
+        <file>img/autosave.png</file>
     </qresource>
 </RCC>

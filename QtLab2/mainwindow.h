@@ -71,6 +71,9 @@ private slots:
 
     void on_TextEdit_cursorPositionChanged();
 
+    void on_actionAutoSave_triggered();
+    void autoSave(); //  autoSave()
+
 private:
     Ui::MainWindow *ui;
     //必须在库文件里手动添加来实现
@@ -81,5 +84,10 @@ private:
     bool textChanged;
 
     bool userEditConfirmed();
+
+    QTimer *autoSaveTimer; // 定时器
+    bool autoSaveEnabled = false; // 初始不启用
+    int autoSaveInterval = 6000; // 自动保存间隔，单位是毫秒（6秒 = 6000ms）
+
 };
 #endif // MAINWINDOW_H

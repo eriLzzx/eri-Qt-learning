@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
     QLabel *author = new QLabel(ui->statusbar);
     author->setText(tr("梁梓轩"));
     ui->statusbar->addPermanentWidget(author);
-    //当定时器超时（timeout）时，自动调用 MainWindow 类中的 autoSave 函数。
+    //当定时器超时（timeout）时，自动调用 MainWindow 类中的 autoSave 函数。实现自动保存
     autoSaveTimer = new QTimer(this);
     connect(autoSaveTimer, &QTimer::timeout, this, &MainWindow::autoSave);
 }

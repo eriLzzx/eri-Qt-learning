@@ -74,6 +74,8 @@ private slots:
     void on_actionAutoSave_triggered();
     void autoSave(); //  autoSave()
 
+    void on_actionShowLineNumber_triggered();
+
 private:
     Ui::MainWindow *ui;
     //必须在库文件里手动添加来实现

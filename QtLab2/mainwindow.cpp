@@ -296,7 +296,18 @@ void MainWindow::on_actionBackGroundColor_triggered()
 
 void MainWindow::on_actionFontBackGroundColor_triggered()
 {
+    QColor color = QColorDialog::getColor(Qt::white, this, "选择文字的背景颜色");
+    if (color.isValid()) {
+        // 创建一个 QTextCharFormat 对象，设置背景色
+        QTextCharFormat fmt;
+        fmt.setBackground(color);
+        // 获取 QTextEdit 的当前光标
+        QTextCursor cursor = ui->TextEdit->textCursor();
+        // 将光标所在范围内的文本背景色设置为所选颜色
+        cursor.mergeCharFormat(fmt);
 
+        ui->TextEdit->setTextCursor(cursor);
+    }
 }
 
 
@@ -443,4 +454,7 @@ void MainWindow::on_actionAutoSave_triggered()
         QMessageBox::information(this, "自动保存", "自动保存已启动");
     }
 }
+
+
+
 

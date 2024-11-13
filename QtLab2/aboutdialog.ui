@@ -32,8 +32,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>10</y>
+     <x>100</x>
+     <y>20</y>
      <width>281</width>
      <height>41</height>
     </rect>
@@ -45,7 +45,7 @@
     </font>
    </property>
    <property name="text">
-    <string>小牛文本编辑器</string>
+    <string>文本编辑器</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -77,12 +77,12 @@
     <string>版本：v1.0 2024/10/31</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>230</x>
      <y>70</y>
-     <width>141</width>
+     <width>154</width>
      <height>101</height>
     </rect>
    </property>
@@ -90,21 +90,21 @@
     <item>
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>开发者</string>
+       <string>开发者：梁梓轩</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>学号</string>
+       <string>学号：2022414040224</string>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_4">
       <property name="text">
-       <string>邮箱</string>
+       <string>邮箱：erriLzzx@gmail.com</string>
       </property>
      </widget>
     </item>

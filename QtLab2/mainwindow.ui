@@ -379,8 +379,8 @@
   </action>
   <action name="actionShowLineNumber">
    <property name="icon">
-    <iconset resource="res.qrc">
-     <normaloff>:/img/lineNumber.png</normaloff>:/img/lineNumber.png</iconset>
+    <iconset>
+     <normaloff>img/copy.png</normaloff>img/copy.png</iconset>
    </property>
    <property name="text">
     <string>显示行号</string>

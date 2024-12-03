@@ -10,6 +10,8 @@ masterView::masterView(QWidget *parent)
 {
     ui->setupUi(this);
 
+    this->setWindowFlag(Qt::FramelessWindowHint);
+
     goLoginView();
 }
 
@@ -89,5 +91,27 @@ void masterView::pushWidgetToStackView(QWidget *widget)
 void masterView::on_btBack_clicked()
 {
     goPreviousView();
+}
+
+
+void masterView::on_stackedWidget_currentChanged(int arg1)
+{
+    int count = ui->stackedWidget->count();
+    if(count > 1)
+        ui->btBack->setEnabled(true);
+    else
+        ui->btBack->setEnabled(false);
+    QString title = ui->stackedWidget->currentWidget()->windowTitle();
+    if(title =="欢迎"){
+        ui->btLogout->setEnabled(true);
+    //只有在欢迎界面才可以注销
+    }else
+        ui->btLogout->setEnabled(false);
+    //只有在登录页面不可返回
+    if(title =="登录"){
+        ui->btLogout->setEnabled(true);
+        ui->btBack->setEnabled(false);
+    }else
+        ui->btLogout->setEnabled(false);
 }
 

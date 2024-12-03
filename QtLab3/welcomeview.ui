@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>642</width>
+    <height>502</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,6 +33,18 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QPushButton" name="btDepartment">
+         <property name="minimumSize">
+          <size>
+           <width>121</width>
+           <height>71</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>121</width>
+           <height>71</height>
+          </size>
+         </property>
          <property name="text">
           <string>科室管理</string>
          </property>
@@ -40,6 +52,18 @@
        </item>
        <item>
         <widget class="QPushButton" name="btDoctor">
+         <property name="minimumSize">
+          <size>
+           <width>121</width>
+           <height>71</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>121</width>
+           <height>71</height>
+          </size>
+         </property>
          <property name="text">
           <string>医生管理</string>
          </property>
@@ -50,7 +74,13 @@
          <property name="minimumSize">
           <size>
            <width>122</width>
-           <height>0</height>
+           <height>71</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>122</width>
+           <height>71</height>
           </size>
          </property>
          <property name="text">

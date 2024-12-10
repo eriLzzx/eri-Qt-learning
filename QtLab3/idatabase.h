@@ -30,9 +30,15 @@ private:
 
 signals:
 public:
+    bool initPatientModel();
+    bool searchPatient(QString filter);
+    bool deleteCurrentPatient();
+    bool submitPatientEdit();
+    void revertPatientEdit();
+
     QSqlTableModel *patientTabModel; //数据模型
     QItemSelectionModel *thePatientSelection;
-    bool initPatientModel();
+
 
 };
 

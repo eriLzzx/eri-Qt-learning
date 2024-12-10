@@ -30,7 +30,7 @@ public slots:
     void goDepartmentView();
     void goPatientView();
     void goPreviousView();
-    void goPatientEditView();
+    void goPatientEditView(int rowNo);
 
 private slots:
     void on_btBack_clicked();

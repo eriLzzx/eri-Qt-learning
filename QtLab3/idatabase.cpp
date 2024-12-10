@@ -1,4 +1,5 @@
 #include "idatabase.h"
+#include <QUuid>
 
 void IDatabase::ininDatabase()
 {
@@ -30,6 +31,13 @@ int IDatabase::addNewPatient()
                                QModelIndex());//在末尾添加一个记录
     QModelIndex curIndex = patientTabModel->index(patientTabModel->rowCount() - 1,
                                                   1);//创建最后一行的ModelIndex
+
+    int curRecNo = curIndex.row();
+    QSqlRecord curRec = patientTabModel->record(curRecNo);
+    curRec.setValue("CREATEDTIMESTAMP",QDateTime::currentDateTime().toString("yyyy-MM-dd"));
+    curRec.setValue("ID",QUuid::createUuid().toString(QUuid::WithoutBraces));
+    patientTabModel->setRecord(curRecNo,curRec);
+
     return curIndex.row();
 }
 

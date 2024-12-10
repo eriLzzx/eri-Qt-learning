@@ -118,3 +118,9 @@ void masterView::on_stackedWidget_currentChanged(int arg1)
         ui->btLogout->setEnabled(false);
 }
 
+
+void masterView::on_btLogout_clicked()
+{
+    exit(0);
+}
+

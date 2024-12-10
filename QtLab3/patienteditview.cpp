@@ -36,7 +36,9 @@ PatientEditView::~PatientEditView()
 
 void PatientEditView::on_btnSave_clicked()
 {
+    dataMapper->submit();//先手动提交QUuid再自动提交
     IDatabase::getInstance().submitPatientEdit();
+
     emit goPreviousView();
 }
 

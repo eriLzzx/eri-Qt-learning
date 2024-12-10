@@ -25,6 +25,7 @@ void LoginView::on_btSignIn_clicked()
 }
 
 
+
 void LoginView::on_btSignUp_clicked()
 {
     emit loginSuccess();

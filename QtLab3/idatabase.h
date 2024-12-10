@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QtSql>
 #include <QSqlDatabase>
-
+#include <QDataWidgetMapper>
 
 class IDatabase : public QObject
 {
@@ -26,7 +26,14 @@ private:
     QSqlDatabase database;
 
     void ininDatabase();
+
+
 signals:
+public:
+    QSqlTableModel *patientTabModel; //数据模型
+    QItemSelectionModel *thePatientSelection;
+    bool initPatientModel();
+
 };
 
 #endif // IDATABASE_H

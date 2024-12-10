@@ -15,6 +15,7 @@ public:
         static IDatabase instance;
         return instance;
     }
+    QString userLogin(QString userName,QString password);
 
 
 private:

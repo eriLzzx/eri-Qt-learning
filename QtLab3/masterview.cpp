@@ -1,7 +1,7 @@
 #include "masterview.h"
 #include <QDebug>
 #include "ui_masterview.h"
-
+#include "idatabase.h"
 
 
 masterView::masterView(QWidget *parent)
@@ -13,6 +13,8 @@ masterView::masterView(QWidget *parent)
     this->setWindowFlag(Qt::FramelessWindowHint);
 
     goLoginView();
+
+    IDatabase::getInstance();
 }
 
 masterView::~masterView()

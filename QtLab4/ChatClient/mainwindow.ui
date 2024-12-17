@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>聊天室客户端</string>
   </property>
   <property name="styleSheet">
    <string notr="true">#titleLabel {
@@ -53,14 +53,14 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="ChatPage">
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QTextEdit" name="textEdit">
+           <widget class="QTextEdit" name="roomTextEdit">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -70,7 +70,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QListWidget" name="listWidget">
+           <widget class="QListWidget" name="userListWidget">
             <property name="minimumSize">
              <size>
               <width>20</width>
@@ -90,17 +90,17 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
-           <widget class="QLineEdit" name="lineEdit"/>
+           <widget class="QLineEdit" name="saylineEdit"/>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="sayButton">
             <property name="text">
              <string>发送</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="logoutButton">
             <property name="text">
              <string>退出</string>
             </property>

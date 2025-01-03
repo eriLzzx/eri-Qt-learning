@@ -33,7 +33,6 @@
     background-color: #ffffff;         /* 背景颜色，白色 */
     border: 2px solid #007BFF;         /* 边框颜色，蓝色 */
     border-radius: 10px;               /* 边框圆角 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果，产生浮动效果 */
 }
 
 #mainFrame{
@@ -53,7 +52,7 @@
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="ChatPage">
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -168,6 +167,9 @@
                 <font>
                  <pointsize>11</pointsize>
                 </font>
+               </property>
+               <property name="text">
+                <string>127.0.0.1</string>
                </property>
               </widget>
              </item>

@@ -43,7 +43,7 @@ void ServerWorker::onReadyRead()
             const QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData,&parseError);
             if(parseError.error == QJsonParseError::NoError){
                 if(jsonDoc.isObject()){
-                    // emit logMessage(QJsonDocument(jsonDoc).toJson(QJsonDocument::Compact));
+                    emit logMessage(QJsonDocument(jsonDoc).toJson(QJsonDocument::Compact));
                     emit jsonReceived(this,jsonDoc.object());
                 }
             }
@@ -67,10 +67,12 @@ void ServerWorker::sendMessgae(const QString &text,const QString &type){
     }
 }
 
-void ServerWorker::sendjson(const QJsonObject &json)
+
+
+void ServerWorker::sendJson(const QJsonObject &json)
 {
     const QByteArray jsonData = QJsonDocument(json).toJson(QJsonDocument::Compact);
-    emit logMessage(QLatin1String("Sending to") + userName() + QLatin1String("-")
+    emit logMessage(QLatin1String("Sending to ") + userName() + QLatin1String("-")
                     + QString::fromUtf8(jsonData));
     QDataStream socketStream(m_serverSocket);
     socketStream.setVersion(QDataStream::Qt_6_7);

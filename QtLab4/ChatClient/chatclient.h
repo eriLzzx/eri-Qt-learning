@@ -17,10 +17,12 @@ public slots:
     void onReadyRead();
     void sendMessgae(const QString &text,const QString &type ="message");
     void connectToServer(const QHostAddress &address,quint16 port);
+    void disconnectFromHost();
 
 signals:
     void connected();
     void messageReceived(const QString &text);
+    void jsonReceived(const QJsonObject &docObj);
 };
 
 #endif // CHATCLIENT_H

@@ -15,6 +15,7 @@ public:
 
 signals:
     void logMessage(const QString &msg );
+    void jsonReceived(ServerWorker *sender,const QJsonObject &docObj);
 
 private:
     QTcpSocket * m_serverSocket;
@@ -23,8 +24,8 @@ private:
 public slots:
     void onReadyRead();
     void sendMessgae(const QString &text,const QString &type ="message");
-    void jsonReceived(ServerWorker *sender,const QJsonObject &docObj);
-    void sendjson(const QJsonObject &json);
+
+    void sendJson(const QJsonObject &json);
 };
 
 #endif // SERVERWORKER_H

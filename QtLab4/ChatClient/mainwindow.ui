@@ -45,7 +45,7 @@
     <item>
      <widget class="QLabel" name="titleLabel">
       <property name="text">
-       <string>欢迎来到224的聊天室</string>
+       <string>欢迎来到224梁梓轩的聊天室</string>
       </property>
      </widget>
     </item>
@@ -192,6 +192,9 @@
                 <font>
                  <pointsize>11</pointsize>
                 </font>
+               </property>
+               <property name="text">
+                <string>Jack</string>
                </property>
               </widget>
              </item>

@@ -12,10 +12,14 @@ public:
 
     QString userName();
     void setUserName(QString user);
+    // 静态变量用于维护所有已连接的用户名列表
+    static QSet<QString> registeredUserNames;
 
 signals:
     void logMessage(const QString &msg );
     void jsonReceived(ServerWorker *sender,const QJsonObject &docObj);
+    void disconnectedFromClient();
+
 
 private:
     QTcpSocket * m_serverSocket;

@@ -3,6 +3,7 @@
 #include <QHostAddress>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -41,6 +42,12 @@ void MainWindow::on_logoutButton_clicked()
 {
     m_chatClient->disconnectFromHost();
     ui->stackedWidget->setCurrentWidget(ui->LoginPage);
+    //在listwidget列表中寻找
+    for(auto aItem : ui->userListWidget->findItems(ui->userNameEdit->text(),Qt::MatchExactly)){
+        qDebug("remove");
+        ui->userListWidget->removeItemWidget(aItem);
+        delete aItem;
+    }
 }
 
 void MainWindow::connectedToServer()
@@ -74,11 +81,46 @@ void MainWindow::jsonReceived(const QJsonObject &docObj)
             return;
 
         userJoined(usernameVal.toString());
+    }else if(typeVal.toString().compare("userdisconnected",Qt::CaseInsensitive) == 0 ){
+        const QJsonValue usernameVal = docObj.value("username");
+        if(usernameVal.isNull() || !usernameVal.isString())
+            return;
+
+        userLeft(usernameVal.toString());
+    }else if(typeVal.toString().compare("userlist",Qt::CaseInsensitive) == 0 ){
+        const QJsonValue userlistVal = docObj.value("userlist");
+        if(userlistVal.isNull() || !userlistVal.isArray())
+            return;
+        //更新成字符串列表
+        userListReceived(userlistVal.toVariant().toStringList());
     }
 }
 
 void MainWindow::userJoined(const QString &user)
 {
     ui->userListWidget->addItem(user);
+}
+
+void MainWindow::userLeft(const QString &user)
+{
+    //在listwidget列表中寻找
+    for(auto aItem : ui->userListWidget->findItems(user,Qt::MatchExactly)){
+        qDebug("remove");
+        ui->userListWidget->removeItemWidget(aItem);
+        delete aItem;
+    }
+}
+
+void MainWindow::userListReceived(const QStringList &list)
+{
+    //清空原先的列表再添加新列表
+    ui->userListWidget->clear();
+    ui->userListWidget->addItems(list);
+}
+
+void MainWindow::refreshConnect()
+{
+    m_chatClient->connectToServer(QHostAddress(ui->serverEdit->text()), 1967);
+    ui->stackedWidget->setCurrentWidget(ui->LoginPage);
 }
 

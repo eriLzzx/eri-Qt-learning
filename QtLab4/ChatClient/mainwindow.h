@@ -19,6 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void on_loginBtn_clicked();
 
@@ -33,8 +34,19 @@ private slots:
     void jsonReceived(const QJsonObject &docObj);
 
     void userJoined(const QString &user);
+
+    void userLeft(const QString &user);
+
+    void userListReceived(const QStringList &list);
+
+    void onServerResponse(const QJsonObject &response);
+
+    void refreshConnect();
 private:
     Ui::MainWindow *ui;
     ChatClient *m_chatClient;
+    bool m_canLogin = true;
+
+
 };
 #endif // MAINWINDOW_H
